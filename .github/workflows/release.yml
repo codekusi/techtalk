@@ -1,12 +1,17 @@
 name: Release
 description: Create github release
 
-on: [pull_request, workflow_dispatch]
+on: 
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
