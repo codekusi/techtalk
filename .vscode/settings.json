@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.windows": {
+        "HTTPS_PROXY": "https://proxy-bvcol.admin.ch:8080",
+        "PATH": "C:\\LegacySW\\conda\\python;C:\\LegacySW\\conda\\python\\scripts;${env:PATH}"
+    }
+}
