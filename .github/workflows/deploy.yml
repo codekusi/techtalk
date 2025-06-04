@@ -1,0 +1,16 @@
+name: Deploy
+
+on: 
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Path to Python environment'
+        required: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, windows]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
