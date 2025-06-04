@@ -8,9 +8,25 @@ on:
         required: false
 
 jobs:
-  deploy:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  install-wheel:
     runs-on: [self-hosted, windows]
+    needs: build
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Clear dist directory
+        run: |
+          if (Test-Path dist) { Remove-Item dist\* }
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.ref_name }}
+          path: dist
+      - name: Install wheel
+        run: |
+          $pip = "${{ inputs.env && format('{0}/scripts/pip.exe', inputs.env) || 'pip.exe' }}"
+          $whl = Get-ChildItem dist *.whl
+          echo "Runing "$pip" install dist/$whl"
+          & "$pip" install dist/$whl
       
